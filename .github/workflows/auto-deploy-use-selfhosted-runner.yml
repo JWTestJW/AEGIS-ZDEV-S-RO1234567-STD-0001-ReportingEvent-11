@@ -35,7 +35,7 @@ jobs:
   analyze-repository-name:
     runs-on: ubuntu-latest
     outputs:
-      env_name_lower: ${{ steps.parse-name.outputs.env_name_lower }}
+      env_name: ${{ steps.parse-name.outputs.env_name }}
       repo_type: ${{ steps.parse-name.outputs.repo_type }}
       molecule: ${{ steps.parse-name.outputs.molecule }}
       study_no: ${{ steps.parse-name.outputs.study_no }}
