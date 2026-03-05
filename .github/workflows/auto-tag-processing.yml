@@ -111,6 +111,7 @@ jobs:
 
             const labels = pr.labels.map(l => l.name);
             core.setOutput("labels", JSON.stringify(labels));
+            core.info(`The labels for this PR are: ${JSON.stringify(labels)}`);
 
       - name: Process Labels and Tag
         id: process-labels-and-tag
