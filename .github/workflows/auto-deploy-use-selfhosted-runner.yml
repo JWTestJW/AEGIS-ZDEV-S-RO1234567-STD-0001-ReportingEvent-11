@@ -158,7 +158,7 @@ jobs:
           echo "✅ Repository name parsed successfully."
 
           # 結果を出力変数に設定
-          echo "env_name_lower=$(echo $ENV_NAME | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          echo "env_name=$(echo $ENV_NAME" >> $GITHUB_OUTPUT
           echo "repo_type=$REPO_TYPE" >> $GITHUB_OUTPUT
           echo "molecule=$PROPS_MOLECULE" >> $GITHUB_OUTPUT
           echo "study_no=$PROPS_STUDY_NO" >> $GITHUB_OUTPUT
@@ -174,11 +174,13 @@ jobs:
   deploy-on-runner:
     needs: analyze-repository-name
     # Self-Hosted ランナーを指定（ラベルは環境に合わせて調整してください）
+    # Labels are case-insensitive. Ensure they match the labels assigned to your self-hosted runners.
     runs-on:
       [
         self-hosted,
-        linux,
-        "${{ needs.analyze-repository-name.outputs.env_name_lower }}"
+        Linux,
+        X64,
+        "${{ needs.analyze-repository-name.outputs.env_name }}"
       ]
 
     steps:
@@ -199,10 +201,6 @@ jobs:
           fetch-depth: 0
           path: checkoutDir
           ref: ${{ env.REF }}
-
-      - name: Show ref info
-        run: |
-          echo "Checked out ref: $REF"
 
       - name: Prepare and Copy to Delivery Directory
         env:
