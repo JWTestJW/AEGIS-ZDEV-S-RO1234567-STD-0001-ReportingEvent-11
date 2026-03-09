@@ -332,8 +332,9 @@ jobs:
           # rsyncの詳細な進捗はログファイルのみに出力する
           if ! rsync -av --progress "${rsync_exclude_opts[@]}" checkoutDir/ "$DEST_PATH/" >> "$LOG_FILE" 2>&1; then
             echo "Error: Failed to copy files with rsync." | tee -a "$LOG_FILE"
-            echo "----- rsync error (last 100 lines) -----"
-            tail -n 100 "$LOG_FILE"
+            echo "▼▼▼▼▼▼▼▼▼▼ Log Details ▼▼▼▼▼▼▼▼▼▼"
+            cat "$LOG_FILE"
+            echo "▲▲▲▲▲▲▲▲▲▲ End of Log Details ▲▲▲▲▲▲▲▲▲▲"
             exit 1
           fi
           echo "Copied files to $DEST_PATH." >> "$LOG_FILE"
